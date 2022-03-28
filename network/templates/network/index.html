@@ -21,8 +21,11 @@
     <div id="all_posts">
         {% for post in all_posts %}
             <div id="single_post">
-                {{ post }}
-            </div>
+                <div id="post"> {{ post }} </div>
+                <a href="{% url 'profile' post.user %}">{{post.user}}</a><br>
+                {{post.time_posted}}<br>
+                {{post.likes.count}}
+            </div><br>
         {% endfor %}
     </div>
 {% endblock %}

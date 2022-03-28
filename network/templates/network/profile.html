@@ -1,0 +1,27 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <h1>{{ test }}</h1>
+    <div id="profile">
+        <h1>TODO: add user profile heading/template</h1>
+        <h4>Welcome to {{ user|title }}'s profile.</h4>
+        {% if can_follow %}
+            <form action="{% url 'follow' user %}" method="POST">
+                {% csrf_token %}
+                <button type="submit"> {{ follow_status }} </button>
+            </form>
+            <h1>TODO: add folow button</h1>
+        {% endif %}
+    </div>
+
+    <div id="all_posts">
+        {% for post in all_posts %}
+            <div id="single_post">
+                <div id="post"> {{ post }} </div>
+                <a href="{% url 'profile' post.user %}">{{post.user}}</a><br>
+                {{post.time_posted}}<br>
+                {{post.likes.count}}
+            </div><br>
+        {% endfor %}
+    </div>
+{% endblock %}

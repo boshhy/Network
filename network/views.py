@@ -1,7 +1,9 @@
+from ast import arg
+import re
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import PostForm
 from .models import Posts, Profile
@@ -78,6 +80,8 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
+        profile = Profile(profile=user)
+        profile.save()
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
@@ -93,3 +97,28 @@ def post(request):
             new_post.save()
     print(user)
     return HttpResponseRedirect(reverse("index"))
+
+
+def profile(request, user):
+    can_follow = True
+    user_id = User.objects.get(username=user)
+    all_posts = Posts.objects.filter(user=user_id)
+
+    if str(request.user) == user:
+        can_follow = False
+    return render(request, "network/profile.html", {
+        'can_follow': can_follow,
+        'all_posts': all_posts,
+        'user': user,
+        'follow_status': 'follow'
+    })
+
+
+def follow(request, user):
+    request_user_id = User.objects.get(username=request.user)
+    print(request_user_id)
+    profile = Profile.objects.get(profile=request_user_id)
+    # TODO
+    # Add the user to the users profiles followee's
+    print(profile)
+    return redirect('profile', user)

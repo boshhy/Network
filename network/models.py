@@ -30,15 +30,15 @@ class Posts(models.Model):
 class Profile(models.Model):
     profile = models.ForeignKey(User, related_name="profile",
                                 on_delete=models.CASCADE, blank=False)
-    # people the user follows
-    user_follows = models.ManyToManyField(
+
+    # people that the user follows
+    follows = models.ManyToManyField(
         User, related_name="follows", blank=True)
-    # people that are following the user
 
     def __str__(self):
-        return self.user
+        return self.profile.username
 
     def serialize(self):
         return {
-            "follows": str(self.user_follows.count()),
+            "follows": str(self.follows.count()),
         }
