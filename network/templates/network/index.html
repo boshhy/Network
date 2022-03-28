@@ -1,5 +1,28 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+    <h1>{{ test }}</h1>
+    {% if user.is_authenticated %}
+    <div>
+        <form id="post_form" action="{% url 'post' %}" method="POST">
+            <h4>Add a Post</h4>
+            {% csrf_token %}
+            {% for field in post_form %}
+                    {{ field }}
+            {% endfor %}
+            <br><button class="post_button" id="post_button_id" type="submit">Add a Post</button>
+        </form>
+    </div> 
+    {% else %}
+    <div id="unauthorized">
+        Sign in to add a Post. <br>
+    </div>
+    {% endif %}
+    <div id="all_posts">
+        {% for post in all_posts %}
+            <div id="single_post">
+                {{ post }}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

@@ -4,3 +4,41 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+
+
+class Posts(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user", blank=False)
+    post = models.TextField()
+    time_posted = models.DateTimeField(auto_now_add=True, blank=False)
+    likes = models.ManyToManyField(
+        User, related_name="liked_posts", blank=True)
+
+    def __str__(self):
+        return self.post
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": self.user.username,
+            "post": self.post,
+            "time_posted": self.time_posted,
+            "likes": str(self.likes.count()),
+        }
+
+
+class Profile(models.Model):
+    profile = models.ForeignKey(User, related_name="profile",
+                                on_delete=models.CASCADE, blank=False)
+    # people the user follows
+    user_follows = models.ManyToManyField(
+        User, related_name="follows", blank=True)
+    # people that are following the user
+
+    def __str__(self):
+        return self.user
+
+    def serialize(self):
+        return {
+            "follows": str(self.user_follows.count()),
+        }

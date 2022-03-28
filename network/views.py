@@ -3,12 +3,32 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .forms import PostForm
+from .models import Posts, Profile
+
 
 from .models import User
 
+# TODO make sure to delete one index definition (currently 2 exist)
+
+
+# def index(request):
+#    return render(request, "network/index.html")
+
 
 def index(request):
-    return render(request, "network/index.html")
+    all_posts = Posts.objects.all().order_by('-time_posted')
+    if request.user.is_authenticated:
+        return render(request, "network/index.html", {
+            "all_posts": all_posts,
+            "post_form": PostForm(),
+            "test": "User is signed in.",
+        })
+    else:
+        return render(request, "network/index.html", {
+            "all_posts": all_posts,
+            "test": "User is not authenticated."
+        })
 
 
 def login_view(request):
@@ -61,3 +81,15 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def post(request):
+    user = request.user
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.cleaned_data["post"]
+            new_post = Posts(user=request.user, post=post)
+            new_post.save()
+    print(user)
+    return HttpResponseRedirect(reverse("index"))
