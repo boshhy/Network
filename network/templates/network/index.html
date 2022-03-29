@@ -27,5 +27,17 @@
                 {{post.likes.count}}
             </div><br>
         {% endfor %}
+        
+        <div id="paginator">
+            {% if all_posts.has_previous %}
+                <a href="?page=1">&laquo First </a>
+                <a href="?page={{ all_posts.previous_page_number }}">Previous</a>
+            {% endif %}
+            Page {{ all_posts.number }} of {{ all_posts.paginator.num_pages }}
+            {%if all_posts.has_next %}
+                <a href="?page={{ all_posts.next_page_number }}">Next</a>
+                <a href="?page={{ all_posts.paginator.num_pages }}">Last &raquo</a>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

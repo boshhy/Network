@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import PostForm
 from .models import Posts, Profile
+from django.core.paginator import Paginator
 
 
 from .models import User
@@ -20,9 +21,14 @@ from .models import User
 
 def index(request):
     all_posts = Posts.objects.all().order_by('-time_posted')
+
+    p = Paginator(all_posts, 10)
+    page = request.GET.get('page')
+    all_posts_paginated = p.get_page(page)
+
     if request.user.is_authenticated:
         return render(request, "network/index.html", {
-            "all_posts": all_posts,
+            "all_posts": all_posts_paginated,
             "post_form": PostForm(),
             "test": "User is signed in.",
         })
@@ -100,25 +106,68 @@ def post(request):
 
 
 def profile(request, user):
-    can_follow = True
-    user_id = User.objects.get(username=user)
-    all_posts = Posts.objects.filter(user=user_id)
+    can_follow = False
+    follow_status = 'Follow'
 
-    if str(request.user) == user:
-        can_follow = False
+    user_id = User.objects.get(username=user)
+
+    if request.user.is_authenticated:
+        request_user_id = User.objects.get(username=request.user)
+        profile = Profile.objects.get(profile=request_user_id)
+        if user_id in profile.follows.all():
+            follow_status = 'Unfollow'
+        if str(request.user) != user:
+            can_follow = True
+
+    all_posts = Posts.objects.filter(user=user_id)
+    total_followers = Profile.objects.filter(follows=user_id).count()
+    total_followees = Profile.objects.get(profile=user_id).follows.count()
+
+    p = Paginator(all_posts, 10)
+    page = request.GET.get('page')
+    all_posts_paginated = p.get_page(page)
+
     return render(request, "network/profile.html", {
         'can_follow': can_follow,
-        'all_posts': all_posts,
-        'user': user,
-        'follow_status': 'follow'
+        'all_posts': all_posts_paginated,
+        'profile_user': user,
+        'follow_status': follow_status,
+        'total_followers': total_followers,
+        'total_followees': total_followees
     })
 
 
 def follow(request, user):
     request_user_id = User.objects.get(username=request.user)
-    print(request_user_id)
+    user_id = User.objects.get(username=user)
     profile = Profile.objects.get(profile=request_user_id)
-    # TODO
-    # Add the user to the users profiles followee's
-    print(profile)
+
+    if user_id in profile.follows.all():
+        print('removed user from follow list')
+        profile.follows.remove(user_id)
+    else:
+        print("added user to follow list")
+        profile.follows.add(user_id)
+
+    profile.save()
+
     return redirect('profile', user)
+
+
+def following(request):
+    if request.user.is_authenticated:
+        user_id = User.objects.get(username=request.user)
+        user_profile = Profile.objects.get(profile=user_id)
+        all_follows = user_profile.follows.all()
+        all_posts = Posts.objects.filter(
+            user__in=all_follows).order_by("time_posted")
+
+        p = Paginator(all_posts, 10)
+        page = request.GET.get('page')
+        all_posts_paginated = p.get_page(page)
+        return render(request, "network/following.html", {
+            "all_posts": all_posts_paginated,
+        })
+
+    else:
+        return HttpResponse("Please log in to view posts from users that you follow.")

@@ -2,4 +2,23 @@
     background-color: aqua;
     color: blueviolet;
     text-align: center;
+    padding: 10px;
+}
+
+#all_posts {
+    background-color:aquamarine;
+    position: relative;
+    text-align: center;
+}
+
+#single_post {
+    background-color: antiquewhite;
+    border: 1px solid black;
+    width: 50%;
+    align-items: center;
+    display: inline-block;
+}
+
+#paginator {
+    border: 1px solid black;
 }

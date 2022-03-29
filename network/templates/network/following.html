@@ -2,20 +2,7 @@
 
 {% block body %}
     <h1>{{ test }}</h1>
-    <div id="profile">
-        <h1>TODO: add user profile heading/template</h1>
-        <h4>Welcome to {{ profile_user|title }}'s profile.</h4>
-        <div>Followers: {{ total_followers }} </div>
-        <div>Following: {{ total_followees }} </div>
-        {% if can_follow %}
-
-                <form action="{% url 'follow' profile_user %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit"> {{ follow_status }} </button>
-                </form>
-        {% endif %}
-    </div>
-
+    <div><h4>Posts from user you follow.</h4></div>
     <div id="all_posts">
         {% for post in all_posts %}
             <div id="single_post">
