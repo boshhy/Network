@@ -150,7 +150,6 @@ def follow(request, user):
         profile.follows.add(user_id)
 
     profile.save()
-
     return redirect('profile', user)
 
 
