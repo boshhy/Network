@@ -1,13 +1,16 @@
 from ast import arg
 import re
+from django import http
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from .forms import PostForm
 from .models import Posts, Profile
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 from .models import User
@@ -170,3 +173,20 @@ def following(request):
 
     else:
         return HttpResponse("Please log in to view posts from users that you follow.")
+
+
+@csrf_exempt
+def edit(request):
+    data = json.loads(request.body)
+    new_text = data['post']
+    post = Posts.objects.get(id=data['id'])
+    if request.user.username == post.user.username:
+        post.post = new_text
+        post.save()
+        return JsonResponse({"outcome": "Success"})
+    return JsonResponse({"outcome": "Failure"})
+
+
+def like(request):
+    print("You have hit the like button")
+    return HttpResponse("you have hit the like button")

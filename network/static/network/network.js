@@ -8,31 +8,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function edit_button_clicked() {
     btn = this
-    btn.innerHTML = 'save'
-    btn.setAttribute('id', 'save_button')
+    post_id = btn.dataset.buttonid
+    btn.style.display = 'none'
 
-    post = document.querySelector(`[data-postid="${btn.dataset.buttonid}"]`);
-    btn.removeEventListener("click", edit_button_clicked)
-    //btn.addEventListener('click', test)
-    btn.setAttribute('type', 'submit')
+    post = document.querySelector(`[data-postid="${post_id}"]`);
+    post.style.display = 'none'
+
     form = document.createElement('form')
-    form.onsubmit = test()
+    form.setAttribute('id', `post_form${post_id}`)
+
     textarea = document.createElement('textarea')
+    textarea.setAttribute('id', `area${post_id}`)
     textarea.innerHTML = post.innerHTML
-    post.innerHTML = ""
-    div = document.getElementById('edit_div')
-    div.append(btn)
+
+    div = post.parentNode
+    input = document.createElement('input')
+    input.setAttribute('type', 'submit')
+    input.value = 'Save'
+
     form.append(textarea)
-    post.append(form)
-}
+    form.append(input)
 
-function test() {
-    // btn = this
-    // btn.innerHTML = 'Edit'
-    //btn.setAttribute('id', 'edit_button')
+    form.addEventListener('submit', (e) => {
+        console.log('inside the submit listener function')
+        post_id = this.dataset.buttonid
+        e.preventDefault();
+        the_text = document.getElementById(`area${post_id}`)
+        console.log(this.dataset.buttonid)
+        console.log(the_text.value)
 
-    //post = document.querySelector(`[data-postid="${btn.dataset.buttonid}"]`);
-    console.log(this)
-    console.log("you are now calling the save function")
-    //console.log(post.innerHTML)
+        fetch('edit', {
+            method: 'POST',
+            body: JSON.stringify({
+                'post': the_text.value,
+                'id': post_id,
+            })
+        })
+            .then(result => result.json())
+            .then(data => {
+                if (data['outcome'] == 'Success') {
+                    the_text.parentNode.style.display = 'none'
+                    post = document.querySelector(`[data-postid="${post_id}"]`);
+                    post.innerHTML = the_text.value
+                    post.style.display = ''
+                    btn = document.querySelector(`[data-buttonid="${post_id}"]`)
+                    btn.style.display = ''
+                }
+                else {
+                    console.log('failure')
+                }
+            })
+    })
+    div.prepend(form)
 }
