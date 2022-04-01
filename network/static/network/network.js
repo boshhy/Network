@@ -37,7 +37,7 @@ function edit_button_clicked() {
         console.log(this.dataset.buttonid)
         console.log(the_text.value)
 
-        fetch('edit', {
+        fetch('/edit', {
             method: 'POST',
             body: JSON.stringify({
                 'post': the_text.value,

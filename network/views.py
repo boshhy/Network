@@ -122,7 +122,7 @@ def profile(request, user):
         if str(request.user) != user:
             can_follow = True
 
-    all_posts = Posts.objects.filter(user=user_id)
+    all_posts = Posts.objects.filter(user=user_id).order_by('-time_posted')
     total_followers = Profile.objects.filter(follows=user_id).count()
     total_followees = Profile.objects.get(profile=user_id).follows.count()
 
@@ -162,8 +162,7 @@ def following(request):
         user_profile = Profile.objects.get(profile=user_id)
         all_follows = user_profile.follows.all()
         all_posts = Posts.objects.filter(
-            user__in=all_follows).order_by("time_posted")
-
+            user__in=all_follows).order_by("-time_posted")
         p = Paginator(all_posts, 10)
         page = request.GET.get('page')
         all_posts_paginated = p.get_page(page)
