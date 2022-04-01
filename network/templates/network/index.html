@@ -1,5 +1,5 @@
 {% extends "network/layout.html" %}
-
+{% load static %}
 {% block body %}
     <h1>{{ test }}</h1>
     {% if user.is_authenticated %}
@@ -24,7 +24,8 @@
                 <div id="post" data-postid="{{post.id}}">{{ post }}</div>
                 <a href="{% url 'profile' post.user %}">{{post.user}}</a><br>
                 {{post.time_posted}}<br>
-                {{post.likes.count}}
+                
+                <img src='{% static "images/heart.png" %}' width="16px" height="16px" > {{post.likes.count}}
                 <div id="edit_div">
                     {% if post.user == request.user %}
                     <button id="edit_button" data-buttonid="{{post.id}}">edit</button>
