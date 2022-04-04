@@ -1,3 +1,8 @@
+body {
+    background-color: #25274d;
+    color: white;
+}
+
 #profile {
     background-color: aqua;
     color: blueviolet;
@@ -6,19 +11,26 @@
 }
 
 #all_posts {
-    background-color:aquamarine;
+    background-color: #25274d;
     position: relative;
     text-align: center;
+    color: black;
 }
 
 #single_post {
-    background-color: antiquewhite;
+    background-color: #2e9cca;
     border: 1px solid black;
     width: 50%;
     align-items: center;
     display: inline-block;
+    margin: 5px;
+    padding: 5px;
 }
 
 #paginator {
     border: 1px solid black;
+}
+
+.liked {
+    color: red;
 }

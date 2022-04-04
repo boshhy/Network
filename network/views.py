@@ -1,5 +1,3 @@
-from ast import arg
-import re
 from django import http
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -186,6 +184,17 @@ def edit(request):
     return JsonResponse({"outcome": "Failure"})
 
 
+@csrf_exempt
 def like(request):
-    print("You have hit the like button")
-    return HttpResponse("you have hit the like button")
+    data = json.loads(request.body)
+    post = Posts.objects.get(id=data['id'])
+    user_id = User.objects.get(username=request.user)
+
+    if user_id in post.likes.all():
+        post.likes.remove(user_id)
+        post.save()
+        return JsonResponse({"outcome": "Removed"})
+
+    post.likes.add(user_id)
+    post.save()
+    return JsonResponse({"outcome": "Added"})

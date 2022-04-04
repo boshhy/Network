@@ -22,7 +22,18 @@
                 <div id="post" data-postid="{{post.id}}">{{ post }}</div>
                 <a href="{% url 'profile' post.user %}">{{post.user}}</a><br>
                 {{post.time_posted}}<br>
-                {{post.likes.count}}
+                {% if user.is_authenticated %}
+                    {% if request.user in post.likes.all %}
+                        <div><i class="fa-solid fa-heart liked" id="like_icon" data-iconid="{{post.id}}"></i>
+                            <span id="postcount{{post.id}}"> {{post.likes.count}} </span></div>
+                    {% else %}
+                        <div><i class="fa-regular fa-heart" id="like_icon" data-iconid="{{post.id}}"></i>
+                            <span id="postcount{{post.id}}"> {{post.likes.count}} </span></div>
+                    {% endif %}
+                {% else %}
+                    <div><i class="fa-regular fa-heart"></i>
+                    <span> {{post.likes.count}} </span></div>
+                {% endif %}
                 <div id="edit_div">
                     {% if post.user == request.user %}
                     <button id="edit_button" data-buttonid="{{post.id}}">edit</button>

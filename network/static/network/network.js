@@ -1,9 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log('JavaScript is working.')
     edit_buttons = document.querySelectorAll("#edit_button");
+    like_icons = document.querySelectorAll("#like_icon")
     edit_buttons.forEach(btn => {
         btn.addEventListener("click", edit_button_clicked)
     });
+    like_icons.forEach(icon => {
+        icon.addEventListener("click", like_icon_clicked)
+    })
+
 })
 
 function edit_button_clicked() {
@@ -60,4 +65,33 @@ function edit_button_clicked() {
             })
     })
     div.prepend(form)
+}
+
+
+function like_icon_clicked() {
+    post_id = this.dataset.iconid
+    //this.className = "fa-solid fa-heart"
+    //console.log(post_id)
+    count = document.getElementById(`postcount${post_id}`)
+    //console.log(count)
+    //count.innerHTML = parseInt(count.innerHTML) + 1
+
+
+    fetch('/like', {
+        method: 'POST',
+        body: JSON.stringify({
+            'id': post_id,
+        })
+    })
+        .then(result => result.json())
+        .then(data => {
+            if (data['outcome'] == 'Added') {
+                count.innerHTML = parseInt(count.innerHTML) + 1
+                this.className = "fa-solid fa-heart liked"
+            }
+            else {
+                count.innerHTML = parseInt(count.innerHTML) - 1
+                this.className = "fa-regular fa-heart"
+            }
+        })
 }
