@@ -26,10 +26,16 @@ a {
 }
 
 #profile {
-    background-color: aqua;
-    color: blueviolet;
+    background-color: black;
+    color: white;
     text-align: center;
     padding: 10px;
+    margin: 10px;
+    width: 95%;
+    align-items: center;
+    display: inline-block;
+    border-radius: 10px;
+
 }
 
 #all_posts {
@@ -78,23 +84,21 @@ a {
 }
 
 #edit_button {
-
-    padding: 0em 1.2em;
+    padding: 0px 8px;
     border: 0.1em solid #FFFFFF;
     margin: 0 0.3em 0.3em 0;
-    border-radius: 0.12em;
+    border-radius: 100px;
     box-sizing: border-box;
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     color: #120b1e;
-
     transition: all 0.2s;
 }
 
 #edit_button:hover {
-    color: #000000;
-    background-color: #FFFFFF;
+    color: #ffffff;
+    background-color: #000000;
 }
 
 #post_button_id {

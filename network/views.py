@@ -35,7 +35,7 @@ def index(request):
         })
     else:
         return render(request, "network/index.html", {
-            "all_posts": all_posts,
+            "all_posts": all_posts_paginated,
             "test": "User is not authenticated."
         })
 

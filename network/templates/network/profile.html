@@ -3,8 +3,7 @@
 {% block body %}
     <h1>{{ test }}</h1>
     <div id="profile">
-        <h1>TODO: add user profile heading/template</h1>
-        <h4>Welcome to {{ profile_user|title }}'s profile.</h4>
+        <h1>{{ profile_user|title }}'s profile.</h1>
         <div>Followers: {{ total_followers }} </div>
         <div>Following: {{ total_followees }} </div>
         {% if can_follow %}
@@ -19,24 +18,34 @@
     <div id="all_posts">
         {% for post in all_posts %}
             <div id="single_post">
-                <div id="post" data-postid="{{post.id}}">{{ post }}</div>
-                <a href="{% url 'profile' post.user %}">{{post.user}}</a><br>
-                {{post.time_posted}}<br>
-                {% if user.is_authenticated %}
-                    {% if request.user in post.likes.all %}
-                        <div><i class="fa-solid fa-heart liked" id="like_icon" data-iconid="{{post.id}}"></i>
-                            <span id="postcount{{post.id}}"> {{post.likes.count}} </span></div>
+                <div id="post_container">
+                    <div id="post" data-postid="{{post.id}}">{{ post }}</div>
+                    <div id="edit_div">
+                        {% if post.user == request.user %}
+                        <button id="edit_button" data-buttonid="{{post.id}}"><i class="fa-solid fa-pen-to-square"></i></button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="poster_info">
+                    <div><a href="{% url 'profile' post.user %}">{{post.user}}</a></div>
+                    <i class="fa-regular fa-clock"></i> {{post.time_posted}}<br>
+                    {% if user.is_authenticated %}
+                        {% if request.user in post.likes.all %}
+                            <div>
+                                <span id="postcount{{post.id}}"> {{post.likes.count}} </span>
+                                <i class="fa-solid fa-heart liked" id="like_icon" data-iconid="{{post.id}}"></i>
+                            </div>
+                        {% else %}
+                            <div>
+                                <span id="postcount{{post.id}}"> {{post.likes.count}} </span>
+                                <i class="fa-regular fa-heart" id="like_icon" data-iconid="{{post.id}}"></i>
+                            </div>
+                        {% endif %}
                     {% else %}
-                        <div><i class="fa-regular fa-heart" id="like_icon" data-iconid="{{post.id}}"></i>
-                            <span id="postcount{{post.id}}"> {{post.likes.count}} </span></div>
-                    {% endif %}
-                {% else %}
-                    <div><i class="fa-regular fa-heart"></i>
-                    <span> {{post.likes.count}} </span></div>
-                {% endif %}
-                <div id="edit_div">
-                    {% if post.user == request.user %}
-                    <button id="edit_button" data-buttonid="{{post.id}}">edit</button>
+                        <div>
+                            <span> {{post.likes.count}} </span>
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
                     {% endif %}
                 </div>
             </div><br>

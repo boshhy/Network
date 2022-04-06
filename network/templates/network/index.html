@@ -16,7 +16,7 @@
     </div> 
     {% else %}
     <div id="unauthorized">
-        Sign in to add a Post. <br>
+        <h5><a href="{% url 'login' %}">Sign in</a> to add a Post. <h5>
     </div>
     {% endif %}
     <div id="all_posts">
