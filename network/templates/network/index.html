@@ -3,9 +3,8 @@
 {% block body %}
     <h1>{{ test }}</h1>
     {% if user.is_authenticated %}
-    <div>
+    <div id="form_div">
         <form id="post_form" action="{% url 'post' %}" method="POST">
-            <h4>Add a Post</h4>
             {% csrf_token %}
             {% for field in post_form %}
                     {{ field }}
@@ -21,24 +20,34 @@
     <div id="all_posts">
         {% for post in all_posts %}
             <div id="single_post">
-                <div id="post" data-postid="{{post.id}}">{{ post }}</div>
-                <a href="{% url 'profile' post.user %}">{{post.user}}</a><br>
-                {{post.time_posted}}<br>
-                {% if user.is_authenticated %}
-                    {% if request.user in post.likes.all %}
-                        <div><i class="fa-solid fa-heart liked" id="like_icon" data-iconid="{{post.id}}"></i>
-                            <span id="postcount{{post.id}}"> {{post.likes.count}} </span></div>
+                <div id="post_container">
+                    <div id="post" data-postid="{{post.id}}">{{ post }}</div>
+                    <div id="edit_div">
+                        {% if post.user == request.user %}
+                        <button id="edit_button" data-buttonid="{{post.id}}">edit</button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="poster_info">
+                    <div><a href="{% url 'profile' post.user %}">{{post.user}}</a></div>
+                    <i class="fa-regular fa-clock"></i> {{post.time_posted}}<br>
+                    {% if user.is_authenticated %}
+                        {% if request.user in post.likes.all %}
+                            <div>
+                                <span id="postcount{{post.id}}"> {{post.likes.count}} </span>
+                                <i class="fa-solid fa-heart liked" id="like_icon" data-iconid="{{post.id}}"></i>
+                            </div>
+                        {% else %}
+                            <div>
+                                <span id="postcount{{post.id}}"> {{post.likes.count}} </span>
+                                <i class="fa-regular fa-heart" id="like_icon" data-iconid="{{post.id}}"></i>
+                            </div>
+                        {% endif %}
                     {% else %}
-                        <div><i class="fa-regular fa-heart" id="like_icon" data-iconid="{{post.id}}"></i>
-                            <span id="postcount{{post.id}}"> {{post.likes.count}} </span></div>
-                    {% endif %}
-                {% else %}
-                    <div><i class="fa-regular fa-heart"></i>
-                    <span> {{post.likes.count}} </span></div>
-                {% endif %}
-                <div id="edit_div">
-                    {% if post.user == request.user %}
-                    <button id="edit_button" data-buttonid="{{post.id}}">edit</button>
+                        <div>
+                            <span> {{post.likes.count}} </span>
+                            <i class="fa-regular fa-heart"></i>
+                        </div>
                     {% endif %}
                 </div>
             </div><br>

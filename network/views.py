@@ -31,7 +31,7 @@ def index(request):
         return render(request, "network/index.html", {
             "all_posts": all_posts_paginated,
             "post_form": PostForm(),
-            "test": "User is signed in.",
+            "test": "Signed in as " + request.user.username,
         })
     else:
         return render(request, "network/index.html", {

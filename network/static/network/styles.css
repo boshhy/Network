@@ -1,6 +1,28 @@
 body {
     background-color: #25274d;
     color: white;
+    position: relative;
+    text-align: center;
+
+}
+
+a {
+    color: yellow;
+}
+
+
+
+#poster_info {
+    width: 30%;
+    float: right;
+    /*border: 1px solid greenyellow;*/
+    text-align: center;
+}
+
+#post_form {
+    text-align: center;
+    align-items: center;
+    display: inline-block;
 }
 
 #profile {
@@ -21,16 +43,56 @@ body {
     background-color: #2e9cca;
     border: 1px solid black;
     width: 50%;
+    height: 100%;
     align-items: center;
     display: inline-block;
     margin: 5px;
     padding: 5px;
+    border-radius: 10px;
 }
 
 #paginator {
-    border: 1px solid black;
+    color: white;
+    margin: 5px;
+    margin-bottom: 15px;
+    background-color:
+        #25274d;
+}
+
+#paginator a {
+    color: rgb(54, 219, 57);
 }
 
 .liked {
     color: red;
+}
+
+#post_container {
+    height: 100%;
+    width: 70%;
+    float: left;
+}
+
+#edit_div {
+    bottom: 0px;
+}
+
+#edit_button {
+
+    padding: 0em 1.2em;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 0.12em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #120b1e;
+
+    transition: all 0.2s;
+}
+
+#edit_button:hover {
+    color: #000000;
+    background-color: #FFFFFF;
 }
