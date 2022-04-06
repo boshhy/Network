@@ -26,7 +26,7 @@
                     <div id="post" data-postid="{{post.id}}">{{ post }}</div>
                     <div id="edit_div">
                         {% if post.user == request.user %}
-                        <button id="edit_button" data-buttonid="{{post.id}}">edit</button>
+                        <button id="edit_button" data-buttonid="{{post.id}}"><i class="fa-solid fa-pen-to-square"></i></button>
                         {% endif %}
                     </div>
                 </div>
@@ -49,6 +49,7 @@
                         <div>
                             <span> {{post.likes.count}} </span>
                             <i class="fa-regular fa-heart"></i>
+                            
                         </div>
                     {% endif %}
                 </div>

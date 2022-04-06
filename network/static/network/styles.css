@@ -80,7 +80,7 @@ a {
 }
 
 #edit_div {
-    bottom: 0px;
+    width: 520px;
 }
 
 #edit_button {
@@ -103,4 +103,27 @@ a {
 
 #post_button_id {
     border-radius: 5px;
+}
+
+#save_button {
+    padding: 0px 8px;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 100px;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #120b1e;
+    transition: all 0.2s;
+}
+
+#save_button:hover {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+#post {
+    min-height: 64px;
+    width: 520px;
 }

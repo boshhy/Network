@@ -25,14 +25,20 @@ function edit_button_clicked() {
     textarea = document.createElement('textarea')
     textarea.setAttribute('id', `area${post_id}`)
     textarea.innerHTML = post.innerHTML
+    textarea.setAttribute('style', 'min-height: 64px; width: 520px; resize:none; border-radius: 10px; padding:5px;')
 
     div = post.parentNode
-    input = document.createElement('input')
-    input.setAttribute('type', 'submit')
-    input.value = 'Save'
+    btn = document.createElement('button')
+    btn.setAttribute('type', 'submit')
+    btn.setAttribute('id', 'save_button')
+    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i>'
+
+    btn_div = document.createElement('div')
+    btn_div.setAttribute('style', 'width: 520px;')
+    btn_div.append(btn)
 
     form.append(textarea)
-    form.append(input)
+    form.append(btn_div)
 
     form.addEventListener('submit', (e) => {
         console.log('inside the submit listener function')
