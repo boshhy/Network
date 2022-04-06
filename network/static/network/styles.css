@@ -96,3 +96,7 @@ a {
     color: #000000;
     background-color: #FFFFFF;
 }
+
+#post_button_id {
+    border-radius: 5px;
+}
