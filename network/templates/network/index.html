@@ -1,7 +1,7 @@
 {% extends "network/layout.html" %}
 {% load static %}
 {% block body %}
-    <h1>{{ test }}</h1>
+    <h1>{{ quote }}</h1>
     {% if user.is_authenticated %}
     <div id="form_div">
         <form id="post_form" action="{% url 'post' %}" method="POST">
@@ -10,7 +10,7 @@
                     {{ field }}
             {% endfor %}
             <div>
-                <button class="post_button" id="post_button_id" type="submit">Add a Post</button>
+                <button class="post_button" id="post_button_id" type="submit"><i class="fa-solid fa-message"></i></button>
             </div>
         </form>
     </div> 
@@ -19,6 +19,7 @@
         <h5><a href="{% url 'login' %}">Sign in</a> to add a Post. <h5>
     </div>
     {% endif %}
+    <br>
     <div id="all_posts">
         {% for post in all_posts %}
             <div id="single_post">
@@ -31,7 +32,7 @@
                     </div>
                 </div>
                 <div id="poster_info">
-                    <div><a href="{% url 'profile' post.user %}">{{post.user}}</a></div>
+                    <div><a href="{% url 'profile' post.user %}">{{post.user|title}}</a></div>
                     <i class="fa-regular fa-clock"></i> {{post.time_posted}}<br>
                     {% if user.is_authenticated %}
                         {% if request.user in post.likes.all %}

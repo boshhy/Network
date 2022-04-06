@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>{{ test }}</h1>
-    <div><h4>Posts from user you follow.</h4></div>
+    <div><h4 style="color: black;">Posts from users you follow.</h4></div>
     <div id="all_posts">
         {% for post in all_posts %}
             <div id="single_post">
@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div id="poster_info">
-                    <div><a href="{% url 'profile' post.user %}">{{post.user}}</a></div>
+                    <div><a href="{% url 'profile' post.user %}">{{post.user|title}}</a></div>
                     <i class="fa-regular fa-clock"></i> {{post.time_posted}}<br>
                     {% if user.is_authenticated %}
                         {% if request.user in post.likes.all %}

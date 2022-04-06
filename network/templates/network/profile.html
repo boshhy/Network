@@ -3,14 +3,18 @@
 {% block body %}
     <h1>{{ test }}</h1>
     <div id="profile">
-        <h1>{{ profile_user|title }}'s profile.</h1>
+        <h2>{{ profile_user|title }}'s profile.</h2>
         <div>Followers: {{ total_followers }} </div>
         <div>Following: {{ total_followees }} </div>
         {% if can_follow %}
 
-                <form action="{% url 'follow' profile_user %}" method="POST">
+                <form id="follow_form" action="{% url 'follow' profile_user %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit"> {{ follow_status }} </button>
+                    {% if follow_status == 'Follow' %}
+                        <button id="follow_btn" type="submit" style="color: blue;"> <i class="fa-solid fa-user-plus"></i></button>
+                    {% else %}
+                        <button id="follow_btn" type="submit" style="color: red;"> <i class="fa-solid fa-user-minus"></i></button>
+                    {% endif %}
                 </form>
         {% endif %}
     </div>
@@ -27,7 +31,7 @@
                     </div>
                 </div>
                 <div id="poster_info">
-                    <div><a href="{% url 'profile' post.user %}">{{post.user}}</a></div>
+                    <div><a href="{% url 'profile' post.user %}"> {{post.user|title}}</a></div>
                     <i class="fa-regular fa-clock"></i> {{post.time_posted}}<br>
                     {% if user.is_authenticated %}
                         {% if request.user in post.likes.all %}

@@ -9,7 +9,7 @@ from .models import Posts, Profile
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+import random
 
 from .models import User
 
@@ -28,15 +28,24 @@ def index(request):
     all_posts_paginated = p.get_page(page)
 
     if request.user.is_authenticated:
+        quotes = ['Penny for your thoughts.',
+                  'Express your thoughts.',
+                  'What\'s on your mind?',
+                  'What are you thinking?',
+                  'Say something.',
+                  'Share your ideas.',
+                  ]
+        quote = random.choice(quotes)
+
         return render(request, "network/index.html", {
             "all_posts": all_posts_paginated,
             "post_form": PostForm(),
-            "test": "Signed in as " + request.user.username,
+            "quote": quote
         })
     else:
         return render(request, "network/index.html", {
             "all_posts": all_posts_paginated,
-            "test": "User is not authenticated."
+            "quote": "User is not authenticated."
         })
 
 

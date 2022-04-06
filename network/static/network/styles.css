@@ -1,5 +1,5 @@
 body {
-    background-color: #25274d;
+    background-color: #ababab;
     color: white;
     position: relative;
     text-align: center;
@@ -10,7 +10,17 @@ a {
     color: yellow;
 }
 
+.nav {
+    background-color: #222222 !important;
+}
 
+.nav-link {
+    color: yellow !important;
+}
+
+.navbar-brand {
+    color: yellow !important;
+}
 
 #poster_info {
     width: 30%;
@@ -25,28 +35,17 @@ a {
     display: inline-block;
 }
 
-#profile {
-    background-color: black;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin: 10px;
-    width: 95%;
-    align-items: center;
-    display: inline-block;
-    border-radius: 10px;
 
-}
 
 #all_posts {
-    background-color: #25274d;
+    background-color: #ababab;
     position: relative;
     text-align: center;
-    color: black;
+    color: white;
 }
 
 #single_post {
-    background-color: #2e9cca;
+    background-color: #393939;
     border: 1px solid black;
     width: 50%;
     height: 100%;
@@ -62,11 +61,11 @@ a {
     margin: 5px;
     margin-bottom: 15px;
     background-color:
-        #25274d;
+        #ababab;
 }
 
 #paginator a {
-    color: rgb(54, 219, 57);
+    color: black;
 }
 
 .liked {
@@ -81,6 +80,10 @@ a {
 
 #edit_div {
     width: 520px;
+}
+
+h1 {
+    color: black;
 }
 
 #edit_button {
@@ -102,7 +105,22 @@ a {
 }
 
 #post_button_id {
-    border-radius: 5px;
+    width: 64px;
+    padding: 0px 8px;
+    border: 0.1em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    border-radius: 100px;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #120b1e;
+    transition: all 0.2s;
+}
+
+#post_button_id:hover {
+    color: #ffffff;
+    background-color: #000000;
 }
 
 #save_button {
@@ -126,4 +144,42 @@ a {
 #post {
     min-height: 64px;
     width: 520px;
+}
+
+
+#profile {
+    background-color: #202020;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    width: 95%;
+    align-items: center;
+    display: inline-block;
+    border-radius: 10px;
+
+}
+
+#follow_btn {
+    padding: 0px 8px;
+    border: 0.1px solid #FFFFFF;
+    margin: 0px 0.3px 0.3px 0px;
+    border-radius: 100px;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    color: #120b1e;
+    transition: all 0.2s;
+    width: 64px;
+}
+
+#follow_btn:hover {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+#follow_form {
+    margin: 16px;
+    margin-bottom: 0px;
 }
