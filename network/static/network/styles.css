@@ -3,7 +3,6 @@ body {
     color: white;
     position: relative;
     text-align: center;
-
 }
 
 a {
@@ -25,7 +24,6 @@ a {
 #poster_info {
     width: 30%;
     float: right;
-    /*border: 1px solid greenyellow;*/
     text-align: center;
 }
 
@@ -34,8 +32,6 @@ a {
     align-items: center;
     display: inline-block;
 }
-
-
 
 #all_posts {
     background-color: #ababab;
@@ -60,8 +56,7 @@ a {
     color: white;
     margin: 5px;
     margin-bottom: 15px;
-    background-color:
-        #ababab;
+    background-color: #ababab;
 }
 
 #paginator a {

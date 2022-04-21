@@ -6,6 +6,7 @@ class User(AbstractUser):
     pass
 
 
+# This class will be used to store a post's user, text, time, and likes
 class Posts(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user", blank=False)
@@ -27,6 +28,7 @@ class Posts(models.Model):
         }
 
 
+# This class is used to get the profiles follow count
 class Profile(models.Model):
     profile = models.ForeignKey(User, related_name="profile",
                                 on_delete=models.CASCADE, blank=False)
